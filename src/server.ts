@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
 import app from "./app";
+import config from "./config";
+import { Server } from "http";
 
-const port: number = 5000;
+let server: Server;
 
 // Database Connection
 async function main() {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/practice-mongoose");
-    console.log("Database Connected");
+    // Connect to the database
+    await mongoose.connect(config.database_url as string);
+    console.log("🔥 Database connected 🔥");
 
-    app.listen(port, () => {
-      console.log(`Server is listening on port ${port}`);
+    // Start the server
+    server = app.listen(config.port, () => {
+      console.log(`The app is running on port: ${config.port}`);
     });
   } catch (error) {
     console.log(`Failed to connect database`, error);
