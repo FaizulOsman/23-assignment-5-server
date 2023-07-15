@@ -23,7 +23,7 @@ const createBook: RequestHandler = catchAsync(
 // Get all Books
 const getAllBooks: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const result = "Test";
+    const result = await BookService.getAllBooks();
 
     // Send Response
     sendResponse<IBook | any>(res, {

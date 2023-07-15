@@ -2,15 +2,32 @@ import { Schema, model } from "mongoose";
 import { IBook, BookModel } from "./book.interface";
 
 // Book Schema
-const bookSchema = new Schema<IBook, BookModel>(
+
+const BookSchema = new Schema<IBook, BookModel>(
   {
-    name: {
+    title: {
       type: String,
-      required: [true, "name is missing!"],
+      required: [true, "title is missing!"],
     },
-    price: {
+    author: {
+      type: String,
+      required: [true, "author is missing!"],
+    },
+    genre: {
+      type: String,
+      required: [true, "genre is missing!"],
+    },
+    publicationDate: {
+      type: String,
+      required: [true, "publication date is missing!"],
+    },
+    reviews: {
+      type: Array,
+      default: [],
+    },
+    rating: {
       type: Number,
-      required: [true, "price is missing!"],
+      default: 0,
     },
   },
   {
@@ -21,4 +38,4 @@ const bookSchema = new Schema<IBook, BookModel>(
   }
 );
 
-export const Book = model<IBook, BookModel>("Book", bookSchema);
+export const Book = model<IBook, BookModel>("Book", BookSchema);
