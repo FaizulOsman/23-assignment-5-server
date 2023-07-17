@@ -1,7 +1,7 @@
 import express from "express";
-import { UserRoutes } from "../modules/user/user.route";
 import { AuthRoutes } from "../modules/auth/auth.route";
 import { BookRoutes } from "../modules/book/book.route";
+import { UserRoutes } from "../modules/user/user.router";
 
 const router = express.Router();
 

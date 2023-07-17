@@ -1,44 +1,86 @@
-import { Request, RequestHandler, Response } from "express";
-import catchAsync from "../../../shared/catchAsync";
+import { RequestHandler } from "express";
 import sendResponse from "../../../shared/sendResponse";
+import catchAsync from "../../../shared/catchAsync";
 import httpStatus from "http-status";
 import { AuthService } from "./auth.service";
-import { IUser } from "../user/user.interface";
+import {
+  IRefreshTokenResponse,
+  IUserLoginResponse,
+  IUserSignupResponse,
+} from "./auth.interface";
+import config from "../../../config";
 
 // Create Auth
-const createAuth: RequestHandler = catchAsync(
-  async (req: Request, res: Response) => {
-    const { ...userData } = req.body;
-    console.log(userData);
-    const postData: any = await AuthService.createAuth(userData);
+const createUser: RequestHandler = catchAsync(async (req, res) => {
+  const { ...userData } = req.body;
 
-    postData.set("password", undefined, { strict: false });
-    const result = await postData;
+  const { result, refreshToken, accessToken } = await AuthService.createUser(
+    userData
+  );
 
-    // Send Response
-    sendResponse<IUser>(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: "User Created Successfully",
-      data: result,
-    });
-  }
-);
+  // set refresh token in the browser cookie
+  const cookieOptions = {
+    secure: config.env === "production",
+    httpOnly: true,
+  };
 
-// Login Auth
-const loginAuth = catchAsync(async (req: Request, res: Response) => {
-  const { ...loginData } = req.body;
-  const result = await AuthService.loginAuth(loginData);
+  res.cookie("refreshToken", refreshToken, cookieOptions);
 
-  sendResponse(res, {
+  sendResponse<IUserSignupResponse>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Auth logged in successfully !",
+    message: "user created successfully",
+    data: { result, accessToken },
+  });
+});
+
+// Login Auth
+const login: RequestHandler = catchAsync(async (req, res) => {
+  const { ...loginData } = req.body;
+
+  const result = await AuthService.login(loginData);
+
+  const { refreshToken, ...accessToken } = result;
+
+  // set refresh token in the browser cookie
+  const cookieOptions = {
+    secure: config.env === "production",
+    httpOnly: true,
+  };
+
+  res.cookie("refreshToken", refreshToken, cookieOptions);
+
+  sendResponse<IUserLoginResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "user logged in successfully",
+    data: accessToken,
+  });
+});
+
+// Refresh Auth
+const refreshToken: RequestHandler = catchAsync(async (req, res) => {
+  const { refreshToken } = req.cookies;
+
+  const result = await AuthService.refreshToken(refreshToken);
+
+  // set refresh token in the browser cookie
+  const cookieOptions = {
+    secure: config.env === "production",
+    httpOnly: true,
+  };
+  res.cookie("refreshToken", refreshToken, cookieOptions);
+
+  sendResponse<IRefreshTokenResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "New access token generated successfully !",
     data: result,
   });
 });
 
 export const AuthController = {
-  createAuth,
-  loginAuth,
+  createUser,
+  login,
+  refreshToken,
 };

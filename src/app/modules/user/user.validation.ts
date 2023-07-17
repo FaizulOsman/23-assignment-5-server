@@ -1,17 +1,15 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-// Define the Zod schema for creating a user
-const createUserZodSchema = z.object({
+const updateUserZodSchema = z.object({
   body: z.object({
-    email: z.string({
-      required_error: "Email is required",
-    }),
-    password: z.string({
-      required_error: "Password is required",
-    }),
+    email: z.string().optional(),
+    password: z.string().optional(),
+    role: z.enum(['user', 'admin']).optional(),
+    name: z.string().optional(),
+    phone: z.string().optional(),
   }),
 });
 
-export const UserValidation = {
-  createUserZodSchema,
+export const userValidation = {
+  updateUserZodSchema,
 };
