@@ -2,6 +2,8 @@ import express from "express";
 import validateRequest from "../../middlewares/validateRequest";
 import { userValidation } from "./user.validation";
 import { UserController } from "./user.controller";
+import { ENUM_USER_ROLE } from "../../../enums/user";
+import auth from "../../middlewares/auth";
 const router = express.Router();
 
 router.get("/my-profile", UserController.getMyProfile);
@@ -14,7 +16,7 @@ router.patch(
 
 router.get("/:id", UserController.getSingleUser);
 
-router.delete("/:id", UserController.deleteUser);
+router.delete("/:id", auth(ENUM_USER_ROLE.ADMIN), UserController.deleteUser);
 
 router.patch(
   "/:id",
@@ -22,6 +24,6 @@ router.patch(
   UserController.updateUser
 );
 
-router.get("/", UserController.getAllUser);
+router.get("/", auth(ENUM_USER_ROLE.ADMIN), UserController.getAllUser);
 
 export const UserRoutes = router;
