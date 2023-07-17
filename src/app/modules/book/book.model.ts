@@ -18,16 +18,36 @@ const BookSchema = new Schema<IBook, BookModel>(
     },
     publicationDate: {
       type: String,
-      required: [true, "publication date is missing!"],
+      required: [true, "publicationDate is missing!"],
     },
-    reviews: {
-      type: Array,
-      default: [],
+    publicationYear: {
+      type: String,
+      required: [true, "publicationYear is missing!"],
     },
-    rating: {
-      type: Number,
-      default: 0,
+    image: {
+      type: String,
+      required: [true, "image is missing!"],
     },
+    creator: {
+      type: String,
+      required: [true, "creator is missing!"],
+    },
+    reviews: [
+      {
+        userName: {
+          type: String,
+          required: true,
+        },
+        review: {
+          type: String,
+          required: true,
+        },
+        userEmail: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
