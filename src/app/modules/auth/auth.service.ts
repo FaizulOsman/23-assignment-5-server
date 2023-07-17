@@ -13,6 +13,12 @@ import ApiError from "../../../errors/ApiError";
 import { jwtHelpers } from "../../../helpers/jwtHelpers";
 
 const createUser = async (payload: IUser): Promise<IUserSignupResponse> => {
+  const isExist = await User.findOne({ email: payload?.email });
+
+  if (isExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Email Already Registered");
+  }
+
   const result = await User.create(payload);
   let accessToken;
   let refreshToken;

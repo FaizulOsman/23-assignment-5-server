@@ -24,19 +24,6 @@ const createBook = async (
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
 
-  const dateObject = new Date();
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-  const publicationDate = formatter.format(dateObject);
-  payload.publicationDate = publicationDate;
-
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear().toString();
-  payload.publicationYear = currentYear;
-
   const result = await Book.create(payload);
   return result;
 };

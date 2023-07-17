@@ -19,6 +19,14 @@ const wishlistZodSchema = z.object({
   }),
 });
 
+const finishedReadingZodSchema = z.object({
+  body: z.object({
+    userId: z.string().optional(),
+    finished: z.boolean().optional(),
+  }),
+});
+
 export const wishlistValidation = {
   wishlistZodSchema,
+  finishedReadingZodSchema,
 };

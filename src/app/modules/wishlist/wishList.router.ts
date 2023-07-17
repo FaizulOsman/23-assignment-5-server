@@ -6,7 +6,7 @@ import { wishlistValidation } from "./wishlist.validation";
 import { WishlistController } from "./wishlist.controller";
 const router = express.Router();
 
-router.get("/:id", auth(ENUM_USER_ROLE.USER), WishlistController.getWishlist);
+router.get("/:id", WishlistController.getWishlist);
 
 router.patch(
   "/:id",
