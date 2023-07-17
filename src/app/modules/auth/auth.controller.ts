@@ -4,13 +4,12 @@ import sendResponse from "../../../shared/sendResponse";
 import httpStatus from "http-status";
 import { AuthService } from "./auth.service";
 import { IUser } from "../user/user.interface";
-import config from "../../../config";
 
 // Create Auth
 const createAuth: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { ...userData } = req.body;
-
+    console.log(userData);
     const postData: any = await AuthService.createAuth(userData);
 
     postData.set("password", undefined, { strict: false });
