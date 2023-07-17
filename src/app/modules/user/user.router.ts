@@ -6,6 +6,7 @@ import { ENUM_USER_ROLE } from "../../../enums/user";
 import auth from "../../middlewares/auth";
 const router = express.Router();
 
+// Routes
 router.get("/my-profile", UserController.getMyProfile);
 
 router.patch(

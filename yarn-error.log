@@ -28,7 +28,7 @@ Trace:
 
 npm manifest: 
   {
-    "name": "16-assignment-3",
+    "name": "23-assignment-5-server",
     "version": "1.0.0",
     "description": "",
     "main": "src/server.ts",

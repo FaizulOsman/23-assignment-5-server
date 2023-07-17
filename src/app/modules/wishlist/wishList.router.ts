@@ -6,6 +6,7 @@ import { wishlistValidation } from "./wishlist.validation";
 import { WishlistController } from "./wishlist.controller";
 const router = express.Router();
 
+// Routes
 router.get("/:id", WishlistController.getWishlist);
 
 router.patch(
