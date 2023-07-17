@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { IGenericErrorMessage } from "../../interfaces/error";
 import handleValidationError from "../../errors/handleValidationError";
 import config from "../../config";
 import ApiError from "../../errors/ApiError";
-import { errorLogger } from "../../shared/logger";
 import { ZodError } from "zod";
 import handleZodError from "../../errors/handleZodError";
 import handleCastError from "../../errors/handleCastError";

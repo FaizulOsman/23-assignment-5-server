@@ -13,4 +13,5 @@ export default {
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
     refresh_secret: process.env.JWT_REFRESH_SECRET,
   },
+  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUND,
 };
