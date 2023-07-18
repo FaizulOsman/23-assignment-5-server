@@ -42,6 +42,10 @@ const BookSchema = new Schema<IBook, BookModel>(
           type: String,
           required: true,
         },
+        rating: {
+          type: Number,
+          required: true,
+        },
         userEmail: {
           type: String,
           required: true,

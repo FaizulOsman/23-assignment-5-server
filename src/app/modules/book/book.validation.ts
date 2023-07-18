@@ -23,6 +23,7 @@ const updateBookZodValidation = z.object({
         z.object({
           userName: z.string(),
           review: z.string(),
+          rating: z.number(),
           userEmail: z.string(),
         })
       )

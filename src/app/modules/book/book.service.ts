@@ -155,7 +155,7 @@ const addReview = async (
       new: true,
     }
   ).populate("reviews");
-
+  console.log(result);
   return result;
 };
 
